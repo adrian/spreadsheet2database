@@ -1,0 +1,54 @@
+Spreadsheet 2 Database
+----------------------
+
+Spreadsheet 2 Database is a tool for importing data from a spreadsheet into a database. At the time of writing it supports Microsoft's OLE 2 Compound Document format (OLE2), i.e. XLS files and MySQL.
+
+
+Usage
+-----
+
+The shell script s2d.sh is used to start the load process. S2D expects 2 parameters, the spreadsheet filename and a control file name.
+
+The control file is a text file containing,
+ - the database connection properties
+ - the target table to load the data into
+ - the sheet containing the data load in the spreadsheet
+ - the range of cells to load from the spreadsheet
+ - a description of each column
+
+The database connection properties are standard JDBC parameters.
+
+The target table must exist.
+
+The sheet number is 0 based, i.e. 0 for the first sheet.
+
+The range of cells is specified using standard spreadsheet cell notation. The start cell is on the top left and the end cell on the bottom right, e.g. A1. If you don't know how many rows there will be then you can given the special row number 0 in the end cell. This instructs S2D to continue loading until it reaches and empty row.
+
+For each column a name and default value must me provided. The name is a string , e.g. "firstname". The default value is the value to use when the cell is empty. If the database column is defined as NOT NULL then this default value is required. If the database column accepts NULL then leaving this field blank will result being loaded for an empty cell.
+
+
+Sample Control File
+-------------------
+
+jdbc.driver.classname=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost/s2d
+jdbc.username=s2d
+jdbc.password=s2d
+
+target.table=person
+
+sheetnumber=0
+startcell=B4
+endcell=F0
+
+column.1.target.db.column=firstname
+column.1.default.value=
+column.2.target.db.column=lastname
+column.2.default.value=
+column.3.target.db.column=address1
+column.3.default.value=
+column.4.target.db.column=city
+column.4.default.value=
+column.5.target.db.column=country
+column.5.default.value=
+
