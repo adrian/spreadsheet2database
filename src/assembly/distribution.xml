@@ -9,6 +9,9 @@
       <filtered>true</filtered>
       <fileMode>744</fileMode>
     </file>
+    <file>
+      <source>README</source>
+    </file>
   </files>
   <dependencySets>
     <dependencySet>
